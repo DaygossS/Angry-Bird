@@ -299,16 +299,15 @@ The application currently assigns a different constant acceleration to each proj
 
 One suitable force profile, with $r=\lVert\mathbf p-\mathbf c\rVert$ and $R>0$, is:
 
-$$
-\boxed{
-\mathbf F_{\mathrm{field}}=
+```math
+\mathbf{F}_{\mathrm{field}} =
 \begin{cases}
-4K\left(1-\dfrac{r}{R}\right)\dfrac{\mathbf p-\mathbf c}{R},
-&0\le r<R,\\[8pt]
-\mathbf 0,&r\ge R.
+4K\left(1-\frac{r}{R}\right)\frac{\mathbf{p}-\mathbf{c}}{R}
+& \text{if } 0 \leq r < R \\[6pt]
+\mathbf{0}
+& \text{if } r \geq R
 \end{cases}
-}
-$$
+```
 
 Here $\mathbf c$ is the burst center and $K>0$ is the **peak force magnitude**, reached at $r=R/2$. The formula is defined at $r=0$ without normalization and has zero magnitude at both $r=0$ and $r=R$. This deliberately simplified field is a **gameplay model**, not a full explosion or collision simulation.
 
