@@ -26,13 +26,17 @@ A **scalar** is a single numerical value, such as time, mass, or distance. A **v
 
 In a three-dimensional Cartesian coordinate system,
 
-$$
-\mathbf a=
+
+```math
+\mathbf{a} =
 \begin{bmatrix}
-a_x\\a_y\\a_z
+a_x \\
+a_y \\
+a_z
 \end{bmatrix}
-\in\mathbb R^3.
-$$
+\in \mathbb{R}^3
+```
+
 
 For a two-dimensional simulation, use $\mathbb R^2$ and omit the $z$ component. The operations below work in either dimension unless otherwise stated.
 
@@ -126,19 +130,6 @@ Here $\theta$ is the angle between two nonzero vectors. Consequently:
 | $\mathbf a\cdot\mathbf b>0$ | The vectors have components in the same general direction. |
 | $\mathbf a\cdot\mathbf b=0$ | The vectors are perpendicular, provided both are nonzero. |
 | $\mathbf a\cdot\mathbf b<0$ | The vectors have components in opposing directions. |
-
-Two particularly useful identities are
-
-$$
-\begin{aligned}
-\mathbf a\cdot\mathbf a&=\lVert\mathbf a\rVert^2,\\
-\operatorname{proj}_{\mathbf n}(\mathbf v)
-  &=(\mathbf v\cdot\mathbf n)\mathbf n
-  &&\text{if }\lVert\mathbf n\rVert=1.
-\end{aligned}
-$$
-
-The scalar $\mathbf v\cdot\mathbf n$ is the **signed velocity component** along the unit direction $\mathbf n$. The vector projection retains only that part of the velocity. This is the main tool for reasoning about motion along a contact normal.
 
 > **Important:** $\mathbf v\cdot\mathbf n$ is a signed component, not necessarily a speed. It can be negative. If $\mathbf n$ is not normalized, divide by its magnitude to obtain the scalar component along its direction.
 
