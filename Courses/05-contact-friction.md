@@ -201,11 +201,13 @@ The contact solver knows the current tangential relative velocity $\mathbf u_t$ 
 
 We first calculate the impulse that would remove *all* tangential relative velocity:
 
-$$
-\mathbf u_t+W\mathbf J_t^*=\mathbf0
+
+```math
+\mathbf{u}_t + W\mathbf{J}_t^{*} = \mathbf{0}
 \quad\Longrightarrow\quad
-\boxed{\mathbf J_t^*=-\frac{\mathbf u_t}{W}.}
-$$
+\boxed{\mathbf{J}_t^{*} = -\frac{\mathbf{u}_t}{W}}
+```
+
 
 If the required impulse is within the static-friction limit,
 
