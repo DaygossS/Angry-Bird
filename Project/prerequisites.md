@@ -5,9 +5,9 @@ Les différents éléments suivants ne sont pas à être parfaitement maitrisé 
 ## A partir de la Tech 1
 
 ### Code Convention
-- [Headers](/convention_headers.md)
-- [Nommage et formatage](/convention_nommage_formatage.md)
-- [Interdits et déconseillés](/convention_interdits_deconseilles.md)
+- [Headers](convention_headers.md)
+- [Nommage et formatage](convention_nommage_formatage.md)
+- [Interdits et déconseillés](convention_interdits_deconseilles.md)
 
 ### Git flow
 
@@ -57,12 +57,12 @@ gitGraph
 
 ### Code Review
 
-[Document](/code_review.md)
+[Document](code_review.md)
 
 
 ## A partir de la Tech 2
 
 ### Tests unitaires — GoogleTest et TDD
 
-[Document](/tests_unitaires.md)
+[Document](tests_unitaires.md)
 

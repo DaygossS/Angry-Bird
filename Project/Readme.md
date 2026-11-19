@@ -2,4 +2,4 @@
 ## Angry bird like
 
 ### Prerequisites
-[French version](/prerequisites.md)
+[French version](prerequisites.md)
