@@ -13,7 +13,7 @@ Instead of introducing an extremely large force, the engine computes a **contact
 | Idea | Key relationship | Interpretation |
 | --- | --- | --- |
 | Separating velocity | $v_s=(\mathbf v_A-\mathbf v_B)\cdot\mathbf n$ | Negative means *closing* along the chosen normal |
-| Restitution | $v_s'=-e\,v_s$ | Controls rebound, $0\le e\le1$ |
+| Restitution | $v_s'=-ev_s$ | Controls rebound, $0\le e\le1$ |
 | Impulse | $\mathbf J=j\mathbf n$ | Immediate change in momentum, not a continuous force |
 | Impulse magnitude | $j=-(1+e)v_s/(w_A+w_B)$ | Basic frictionless contact, $v_s<0$ |
 | Penetration correction | $\Delta\mathbf p_A=\dfrac{w_A}{w_A+w_B}\,d\mathbf n$ | Lighter particles move more |
@@ -93,7 +93,7 @@ For a conventional collision between particles, $\mathbf n$ points **from $B$ to
 The **coefficient of restitution**, $e$, relates normal motion immediately before and after a collision:
 
 $$
-\boxed{v_s'=-e\,v_s,\qquad 0\le e\le1.}
+\boxed{v_s'=-ev_s\qquad 0\le e\le1.}
 $$
 
 - $e=0$: no rebound along the normal; the particles leave the contact with zero relative normal velocity.
@@ -158,8 +158,8 @@ Let $d>0$ measure the violation along $\mathbf n$. Move the two particles in opp
 $$
 \boxed{
 \begin{aligned}
-\Delta\mathbf p_A&=\frac{w_A}{w_A+w_B}\,d\mathbf n,\\[3pt]
-\Delta\mathbf p_B&=-\frac{w_B}{w_A+w_B}\,d\mathbf n.
+\Delta\mathbf p_A&=\frac{w_A}{w_A+w_B}d\mathbf n\qquad 
+\Delta\mathbf p_B&=-\frac{w_B}{w_A+w_B}d\mathbf n.
 \end{aligned}
 }
 $$
