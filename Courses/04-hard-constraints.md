@@ -15,8 +15,8 @@ Instead of introducing an extremely large force, the engine computes a **contact
 | Separating velocity | $v_s=(\mathbf v_A-\mathbf v_B)\cdot\mathbf n$ | Negative means *closing* along the chosen normal |
 | Restitution | $v_s'=-ev_s$ | Controls rebound, $0\le e\le1$ |
 | Impulse | $\mathbf J=j\mathbf n$ | Immediate change in momentum, not a continuous force |
-| Impulse magnitude | $j=-(1+e)v_s/(w_A+w_B)$ | Basic frictionless contact, $v_s<0$ |
-| Penetration correction | $\Delta\mathbf p_A=\dfrac{w_A}{w_A+w_B}\,d\mathbf n$ | Lighter particles move more |
+| Impulse magnitude | $j=-(1+e)v_s'/(w_A+w_B)$ | Basic frictionless contact, $v_s<0$ |
+| Penetration correction | $\Delta\mathbf p_A=\dfrac{w_A}{w_A+w_B}d\mathbf n$ | Lighter particles move more |
 | Cable | $\lVert\mathbf p_B-\mathbf p_A\rVert\le L_{\max}$ | Maximum distance only |
 | Rod | $\lVert\mathbf p_B-\mathbf p_A\rVert=L_0$ | Fixed distance in both directions |
 
@@ -107,9 +107,9 @@ Restitution does **not** specify tangential friction. In this particle model, th
 A force changes velocity over a duration. An **impulse** changes velocity immediately:
 
 $$
-\mathbf J=\Delta\mathbf q=m\,\Delta\mathbf v,
+\mathbf J=\Delta\mathbf q=m\Delta\mathbf v
 \qquad
-\Delta\mathbf v=w\mathbf J,
+\Delta\mathbf v=w\mathbf J
 $$
 
 where $\mathbf q=m\mathbf v$ is momentum and $w=1/m$. The unit of impulse is $\mathrm{N\,s}$ (equivalently $\mathrm{kg\,m/s}$).
@@ -117,15 +117,15 @@ where $\mathbf q=m\mathbf v$ is momentum and $w=1/m$. The unit of impulse is $\m
 For a frictionless contact, the impulse lies along the contact normal:
 
 $$
-\mathbf J=j\mathbf n.
+\mathbf J=j\mathbf n
 $$
 
 Conservation of momentum gives equal and opposite impulses on the two particles:
 
 $$
 \begin{aligned}
-\mathbf v_A'&=\mathbf v_A+jw_A\mathbf n,\\
-\mathbf v_B'&=\mathbf v_B-jw_B\mathbf n.
+\mathbf v_A'&=\mathbf v_A+jw_A\mathbf n\\
+\mathbf v_B'&=\mathbf v_B-jw_B\mathbf n
 \end{aligned}
 $$
 
@@ -133,7 +133,7 @@ Substituting these changes into the target separating velocity yields, for an ap
 
 $$
 \boxed{
- j=\frac{-(1+e)v_s}{w_A+w_B}
+ j=\frac{-(1+e)v_s'}{w_A+w_B}
 }\qquad(v_s<0,\ w_A+w_B>0).
 $$
 
@@ -188,9 +188,9 @@ The solver therefore distinguishes **impact velocity** from velocity acquired th
 For the normal component of relative acceleration,
 
 $$
-a_n=(\mathbf a_A-\mathbf a_B)\cdot\mathbf n,
+a_n=(\mathbf a_A-\mathbf a_B)\cdot\mathbf n
 \qquad
-\Delta v_{\mathrm{acc}}=a_n\Delta t,
+\Delta v_{\mathrm{acc}}=a_n\Delta t
 $$
 
 if $\Delta v_{\mathrm{acc}}<0$, part of the measured closing velocity may have been produced by forces pressing the particles together during this step. A practical correction to the desired post-contact velocity is
