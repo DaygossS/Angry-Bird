@@ -15,7 +15,7 @@ Instead of introducing an extremely large force, the engine computes a **contact
 | Separating velocity | $v_s=(\mathbf v_A-\mathbf v_B)\cdot\mathbf n$ | Negative means *closing* along the chosen normal |
 | Restitution | $v_s'=-ev_s$ | Controls rebound, $0\le e\le1$ |
 | Impulse | $\mathbf J=j\mathbf n$ | Immediate change in momentum, not a continuous force |
-| Impulse magnitude | $j=-(1+e)v_s'/(w_A+w_B)$ | Basic frictionless contact, $v_s<0$ |
+| Impulse magnitude | $j=-(1+e)v_s/(w_A+w_B)$ | Basic frictionless contact, $v_s<0$ |
 | Penetration correction | $\Delta\mathbf p_A=\dfrac{w_A}{w_A+w_B}d\mathbf n$ | Lighter particles move more |
 | Cable | $\lVert\mathbf p_B-\mathbf p_A\rVert\le L_{\max}$ | Maximum distance only |
 | Rod | $\lVert\mathbf p_B-\mathbf p_A\rVert=L_0$ | Fixed distance in both directions |
@@ -133,7 +133,7 @@ Substituting these changes into the target separating velocity yields, for an ap
 
 $$
 \boxed{
- j=\frac{-(1+e)v_s'}{w_A+w_B}
+ j=\frac{-(1+e)v_s}{w_A+w_B}
 }\qquad(v_s<0,\ w_A+w_B>0).
 $$
 
