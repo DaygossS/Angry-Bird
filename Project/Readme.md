@@ -5,15 +5,23 @@
 
 ## Statements
 [Setup and Architecture](statements/00_Setup_and_Architecture.md)
+
 [Gameplay Milestones](statements/01_Gameplay_Milestones.md)
+
 [Physics World Milestones](statements/02_PhysicsWorld_Milestones.md)
+
 [Explosion Milestones](statements/03_Explosion_Milestones.md)
+
 [Physics Scenes Milestones](statements/04_Physics_Scenes_Milestones.md)
+
 
 ## Unit Tests
 [Gameplay Tests](tests/01_Gameplay_Unit_Tests.md)
+
 [Physics World Tests](tests/02_PhysicsWorld_Unit_Tests.md)
+
 [Explosion Tests](tests/03_Explosion_Unit_Tests.md)
+
 
 ## Grading
 
