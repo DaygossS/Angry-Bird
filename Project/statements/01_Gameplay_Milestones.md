@@ -1,4 +1,4 @@
-# Siege Lab — 01. Gameplay Milestones
+# Siege Lab — Gameplay Milestones
 
 | Milestone | Points | Time |
 |---|---:|---:|

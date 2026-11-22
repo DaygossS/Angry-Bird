@@ -1,4 +1,4 @@
-# Siege Lab — 02. PhysicsWorld Milestones
+# Siege Lab — PhysicsWorld Milestones
 
 | Milestone | Points | Time |
 |---|---:|---:|

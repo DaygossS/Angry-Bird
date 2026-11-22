@@ -1,4 +1,4 @@
-# Siege Lab — Explosion Force Generator: Assignment
+# Siege Lab — Explosion Force Generator
 
 | Milestone | Points | Time |
 |---|---:|---:|

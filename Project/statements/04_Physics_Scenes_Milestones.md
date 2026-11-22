@@ -1,4 +1,4 @@
-# Siege Lab — 08. Physics Scenes: Student Assignment
+# Siege Lab — Physics Scenes
 
 | Milestone | Points | Time |
 |---|---:|---:|

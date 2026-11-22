@@ -1,4 +1,4 @@
-# Siege Lab — 03. Gameplay Unit Tests (55 cases)
+# Siege Lab — Gameplay Unit Tests (55 cases)
 
 ## Test rules
 

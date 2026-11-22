@@ -1,4 +1,4 @@
-# Siege Lab — 04. PhysicsWorld Unit Tests (25 cases)
+# Siege Lab — PhysicsWorld Unit Tests (25 cases)
 
 ## Test rules
 

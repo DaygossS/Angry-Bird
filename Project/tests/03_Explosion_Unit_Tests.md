@@ -1,4 +1,4 @@
-# Siege Lab — Explosion: 15 Unit-Test Specifications
+# Siege Lab — Explosion Unit Tests (15 cases)
 
 ## Common test requirements
 
