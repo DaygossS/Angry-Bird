@@ -340,25 +340,6 @@ flowchart LR
     class H owner
 ```
 
-## Grading and schedule
-
-The table is the complete **100-point** rubric, with estimated workload for a **pair**. Parallel work may reduce elapsed calendar time; the total below is the sum of individual tasks.
-
-| Milestone | Points | Time |
-|---|---:|---:|
-| 0 — Setup & tests | 0 | 30 min |
-| Generic `ObjectPool<T,N>` | 0.5 | 30 min |
-| 1 — Orbital camera | 1 | 1 h |
-| 2 — Euler launcher | 2 | 1 h 15 |
-| 3 — Cyclone projectile | 1 | 45 min |
-| 4 — Ghost preview | 1 | 45 min |
-| 5 — Pillar + cube | 0.5 | 30 min |
-| 8 — Direct cage destruction | 1 | 45 min |
-| 9 — Indirect cage destruction | 0.5 | 1 h 30 |
-| 10 — State machine | 1 | 45 min |
-| 11 — Audio | 0.5 | 30 min |
-| **Total** | **9** | **9 h 45** |
-
 ## Fixed-step contract
 
 There is one authoritative update sequence. The Cyclone observer sees prepared contacts **before solving**, but listeners are notified **after** solving; deletion always follows unregistration.

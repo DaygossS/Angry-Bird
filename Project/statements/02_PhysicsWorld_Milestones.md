@@ -240,7 +240,7 @@ flowchart LR
 
 ## Final checks
 
-The PhysicsWorld module is accepted only with genuine Cyclone contact generation and a safe teardown. Compare the written contract with [the 25 test cases](./Siege_Lab_04_PhysicsWorld_Unit_Tests_EN.md) before submission.
+The PhysicsWorld module is accepted only with genuine Cyclone contact generation and a safe teardown. Compare the written contract with [the 25 test cases](../tests/02_PhysicsWorld_Unit_Tests.md) before submission.
 
 1. Validate pointer/address stability and plane handling; no fixed–fixed pairs or double integration.
 2. Protect contact buffers and fixed objects; no `CollisionPrimitive*` virtual deletion.

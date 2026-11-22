@@ -282,7 +282,7 @@ Build exactly two independent dynamic boxes. They touch at `y=3 m` without initi
 
 **Classes:** `Block` (abstract, composes `CollisionBox`), `PillarBlock`, `CubeBlock`, `LevelBuilder`, `GameEntity`.
 
-**Cyclone to inspect:** `include/body.h`, `src/body.cpp`, `include/core.h`, `src/core.cpp`, `include/collide_fine.h`, `src/collide_fine.cpp`, `include/contacts.h`, `src/contacts.cpp`. **Cyclone edits:** none. **Tests:** `CO01–CO03`, `GO04` ([specifications](./Siege_Lab_03_Gameplay_Unit_Tests_EN.md)).
+**Cyclone to inspect:** `include/body.h`, `src/body.cpp`, `include/core.h`, `src/core.cpp`, `include/collide_fine.h`, `src/collide_fine.cpp`, `include/contacts.h`, `src/contacts.cpp`. **Cyclone edits:** none. **Tests:** `CO01–CO03`, `GO04` ([specifications](../tests/0_Gameplay_Unit_Tests.md)).
 
 1. Pillar: full `1×3×1 m`, `3 kg`, center `(0,1.5,0)`; cube: `1×1×1 m`, `1.5 kg`, center `(0,3.5,0)`.
 2. Set block inertia; gravity `−9.81`, friction `0.5`, restitution `0`, linear/angular damping `0.98/0.85`.
@@ -334,7 +334,7 @@ The cage is **one fixed solid box**, not separate bars or a simulated bird. Dest
 
 **Classes:** `CageBlock : Block`, `DamageSystem : ICollisionListener`, `SceneObjects`, `PhysicsWorld`.
 
-**Cyclone to inspect:** `include/body.h`, `include/collide_fine.h`, `src/collide_fine.cpp`, `include/contacts.h` (M7 getter). **Cyclone edits:** none. **Tests:** `CA01–CA06` ([specifications](./Siege_Lab_03_Gameplay_Unit_Tests_EN.md)).
+**Cyclone to inspect:** `include/body.h`, `include/collide_fine.h`, `src/collide_fine.cpp`, `include/contacts.h` (M7 getter). **Cyclone edits:** none. **Tests:** `CA01–CA06` ([specifications](../tests/01_Gameplay_Unit_Tests.md)).
 
 1. Create one `CageBlock` at `(3.6,0.65,0)`, full `0.7×1.3×1.0 m`, inverse mass/inertia `0`.
 2. On an `Enter` involving its ID with prepared closing speed `≥3.0 m/s`, queue its ID for removal.
@@ -393,7 +393,7 @@ Use the **same `CageBlock` and `DamageSystem`** as M8. The projectile hits the p
 
 **Classes:** `PillarBlock`, `CubeBlock`, `CageBlock`, `DamageSystem`, `SceneObjects`, `PhysicsWorld`.
 
-**Cyclone to inspect:** `include/body.h`, `src/body.cpp`, `include/collide_fine.h`, `src/collide_fine.cpp`, `include/contacts.h`, `src/contacts.cpp`. **Cyclone edits:** none. **Tests:** `CH01–CH03` ([specifications](./Siege_Lab_03_Gameplay_Unit_Tests_EN.md)).
+**Cyclone to inspect:** `include/body.h`, `src/body.cpp`, `include/collide_fine.h`, `src/collide_fine.cpp`, `include/contacts.h`, `src/contacts.cpp`. **Cyclone edits:** none. **Tests:** `CH01–CH03` ([specifications](../tests//01_Gameplay_Unit_Tests.md)).
 
 1. Reuse M5 tower and M8 cage; projectile origin `(-8,1,0)`, speed `16 m/s`, yaw `0°`, elevation `26°`.
 2. Run genuine Cyclone box–box and box–sphere contacts at `1/60 s` with friction `0.5` and solver `100/100`.
@@ -438,7 +438,7 @@ Implement the State pattern with three real states. Win/lose is data stored by `
 
 **Classes:** `IGameState` (interface), `StartState`, `PlayingState`, `GameOverState`, `GameStateMachine`, `GameController`.
 
-**Cyclone to inspect:** none; `PhysicsWorld` emits read-only events, not a new Cyclone API. **Cyclone edits:** none. **Tests:** `GS01–GS09` ([specifications](./Siege_Lab_03_Gameplay_Unit_Tests_EN.md)).
+**Cyclone to inspect:** none; `PhysicsWorld` emits read-only events, not a new Cyclone API. **Cyclone edits:** none. **Tests:** `GS01–GS09` ([specifications](../tests/01_Gameplay_Unit_Tests.md)).
 
 1. Call `StartState::onEnter()` once on startup; real transitions run old `onExit` then new `onEnter` exactly once.
 2. Ignore no-op transitions; prevent reentrant lifecycle calls. Fire only while `Playing`.
@@ -489,7 +489,7 @@ Add a few short raylib sound effects; collisions must not create a flood of audi
 
 **Classes:** `AudioFeedback : ICollisionListener`, `SoundBank`, `GameOverState`, `SceneRenderer`.
 
-**Cyclone to inspect:** none; audio uses copied `CollisionEvent`s, not live Cyclone contacts. **Cyclone edits:** none. **Tests:** `AU01–AU03` ([specifications](./Siege_Lab_03_Gameplay_Unit_Tests_EN.md)).
+**Cyclone to inspect:** none; audio uses copied `CollisionEvent`s, not live Cyclone contacts. **Cyclone edits:** none. **Tests:** `AU01–AU03` ([specifications](../tests/01_Gameplay_Unit_Tests.md)).
 
 1. Play fire, meaningful impact, cage break and win/lose commands; only significant `Enter` triggers impact sound.
 2. Play cage break once; invoke win/lose sound only in `GameOverState::onEnter()`.
@@ -534,4 +534,4 @@ When both tracks merge, the physical objects and their addresses stay in `SceneO
 2. Register all live shapes, including the single fixed cage, then **step exactly once per fixed tick**.
 3. Listen to copied `Enter` events; queue removals; unregister before deletion.
 4. Check direct and indirect wins, restart, remaining ammo and silence at rest.
-5. Run all **55** [Gameplay tests](../tests/03_Gameplay_Unit_Tests.md) and check visuals/audio manually.
+5. Run all **55** [Gameplay tests](../tests/01_Gameplay_Unit_Tests.md) and check visuals/audio manually.
