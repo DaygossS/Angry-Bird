@@ -50,26 +50,65 @@ function download_progress(total, current)
     print("Download progress (" .. percent .. "%/100%)")
 end
 
-function check_raylib()
-    os.chdir("external")
-    if(os.isdir("raylib-master") == false) then
-        if(not os.isfile("raylib-master.zip")) then
-            print("Raylib not found, downloading from github")
-            local result_str, response_code = http.download("https://github.com/raysan5/raylib/archive/refs/heads/master.zip", "raylib-master.zip", {
+-- Pinned dependency versions: everyone in the team builds exactly the same code.
+raylib_version = "6.2"
+googletest_version = "1.17.0"
+
+raylib_dir = "external/raylib-" .. raylib_version
+googletest_dir = "external/googletest-" .. googletest_version
+
+function fetch_archive(url, folder)
+    if (os.isdir(folder) == false) then
+        local zipName = folder .. ".zip"
+        if (not os.isfile(zipName)) then
+            print(folder .. " not found, downloading " .. url)
+            local result_str, response_code = http.download(url, zipName, {
                 progress = download_progress,
                 headers = { "From: Premake", "Referer: Premake" }
             })
+            if (response_code ~= 200) then
+                error("Download failed (" .. tostring(response_code) .. "): " .. url)
+            end
         end
-        print("Unzipping to " ..  os.getcwd())
-        zip.extract("raylib-master.zip", os.getcwd())
-        os.remove("raylib-master.zip")
+        print("Unzipping " .. zipName .. " to " .. os.getcwd())
+        zip.extract(zipName, os.getcwd())
+        os.remove(zipName)
     end
-    os.chdir("../")
 end
 
 function build_externals()
-     print("calling externals")
-     check_raylib()
+    print("calling externals")
+    os.chdir("external")
+    fetch_archive("https://github.com/raysan5/raylib/archive/refs/tags/" .. raylib_version .. ".zip", "raylib-" .. raylib_version)
+    fetch_archive("https://github.com/google/googletest/archive/refs/tags/v" .. googletest_version .. ".zip", "googletest-" .. googletest_version)
+    os.chdir("../")
+end
+
+function link_raylib()
+    links {"raylib"}
+    dependson {"raylib"}
+
+    -- Explicit raylib.lib before the default Windows libs: avoids the CloseWindow clash with user32.lib.
+    filter "action:vs*"
+        links {"raylib.lib"}
+        libdirs {"../bin/%{cfg.buildcfg}"}
+
+    filter "system:windows"
+        links {"winmm", "gdi32", "opengl32"}
+
+    filter "system:linux"
+        links {"pthread", "m", "dl", "rt"}
+
+    filter {"system:linux", "options:wayland=off"}
+        links {"X11"}
+
+    filter {"system:linux", "options:wayland=on"}
+        links {"wayland-client", "wayland-cursor", "wayland-egl", "xkbcommon"}
+
+    filter "system:macosx"
+        links {"OpenGL.framework", "Cocoa.framework", "IOKit.framework", "CoreFoundation.framework", "CoreAudio.framework", "CoreVideo.framework", "AudioToolbox.framework", "QuartzCore.framework"}
+
+    filter {}
 end
 
 function platform_defines()
@@ -115,17 +154,6 @@ function platform_defines()
     filter {}
 end
 
--- if you don't want to download raylib, then set this to false, and set the raylib dir to where you want raylib to be pulled from, must be full sources.
-downloadRaylib = true
-raylib_dir = "external/raylib-master"
-
-workspaceName = 'MyGame'
-baseName = path.getbasename(path.getdirectory(os.getcwd()));
-
---if (baseName ~= 'raylib-quickstart') then
-    workspaceName = baseName
---end
-
 if (os.isdir('build_files') == false) then
     os.mkdir('build_files')
 end
@@ -134,12 +162,24 @@ if (os.isdir('external') == false) then
     os.mkdir('external')
 end
 
-workspace (workspaceName)
+build_externals()
+
+cyclone_include = "../cyclone/include"
+core_include = "../src/Core"
+googletest_include = googletest_dir .. "/googletest/include"
+
+workspace "Angry-Bird"
     location "../"
     configurations { "Debug", "Release"}
-    platforms { "x64", "x86", "ARM64"}
-
+    platforms { "x64" }
     defaultplatform ("x64")
+    startproject "SiegeLabGame"
+
+    language "C++"
+    cppdialect "C++20"
+    cdialect "C17"
+    architecture "x86_64"
+    targetdir "../bin/%{cfg.buildcfg}"
 
     filter "configurations:Debug"
         defines { "DEBUG" }
@@ -150,28 +190,50 @@ workspace (workspaceName)
         optimize "On"
 
     filter {"configurations:Release", "action:vs*"}
-       linktimeoptimization "On"
+        linktimeoptimization "On"
 
-    filter { "platforms:x64" }
-        architecture "x86_64"
+    filter "action:vs*"
+        defines {"_WINSOCK_DEPRECATED_NO_WARNINGS", "_CRT_SECURE_NO_WARNINGS"}
+        characterset ("Unicode")
+        buildoptions { "/Zc:__cplusplus" }
 
-    filter { "platforms:ARM64" }
-        architecture "ARM64"
+    filter "system:windows"
+        defines {"_WIN32"}
 
     filter {}
 
-    targetdir "bin/%{cfg.buildcfg}/"
+group "Dependencies"
 
-if (downloadRaylib) then
-    build_externals()
-    end
+    -- Supplied teacher library (Project/Cyclone_Library.zip). Do not edit, except where milestones say so.
+    project "Cyclone"
+        kind "StaticLib"
+        location "../"
+        files {"../cyclone/include/cyclone/*.h", "../cyclone/src/*.cpp"}
+        includedirs {"../cyclone/include/cyclone", cyclone_include}
+        warnings "Off"
 
-    startproject(workspaceName)
+    project "GoogleTest"
+        kind "StaticLib"
+        location "../"
+        files {googletest_dir .. "/googletest/src/gtest-all.cc", googletest_dir .. "/googletest/src/gtest_main.cc"}
+        includedirs {googletest_include, googletest_dir .. "/googletest"}
+        warnings "Off"
 
-    project (workspaceName)
+group ""
+
+    -- Game rules, physics world and entities: everything testable without a window.
+    project "SiegeLabCore"
+        kind "StaticLib"
+        location "../"
+        files {"../src/Core/**.h", "../src/Core/**.hpp", "../src/Core/**.cpp"}
+        includedirs {core_include, cyclone_include, raylib_dir .. "/src"}
+        links {"Cyclone"}
+        platform_defines()
+
+    -- Window, input and rendering entry point.
+    project "SiegeLabGame"
         kind "ConsoleApp"
         location "../"
-        targetdir "../bin/%{cfg.buildcfg}"
 
         filter {"system:windows", "configurations:Release", "action:gmake*"}
             kind "WindowedApp"
@@ -184,65 +246,44 @@ if (downloadRaylib) then
         filter "action:vs*"
             debugdir "$(SolutionDir)"
 
-        filter {"action:gmake*"} -- Uncoment if you need to force StaticLib
---          buildoptions { "-static" }
-        filter{}
+        filter {}
 
-        vpaths 
+        vpaths
         {
-            ["Header Files/*"] = { "../src/**.h",  "../src/**.hpp"},
-            ["Source Files/*"] = {"../src/**.c", "src/**.cpp"},
-            ["Windows Resource Files/*"] = {"../src/**.rc", "../src/**.ico"},
+            ["Header Files/*"] = {"../src/Game/**.h", "../src/Game/**.hpp"},
+            ["Source Files/*"] = {"../src/Game/**.cpp"},
+            ["Windows Resource Files/*"] = {"../src/Game/**.rc", "../src/Game/**.ico"},
             ["Game Resource Files/*"] = {"../resources/**"},
         }
-        
-        files {"../src/**.c", "../src/**.cpp", "../src/**.h", "../src/**.hpp"}
-        
+
+        files {"../src/Game/**.cpp", "../src/Game/**.h", "../src/Game/**.hpp"}
+
         filter {"system:windows", "action:vs*"}
-            files {"../src/*.rc", "../src/*.ico"}
-            files {"../resources/**"}
+            files {"../src/Game/*.rc", "../src/Game/*.ico", "../resources/**"}
 
-        filter{}
-        
-        includedirs { "../src" }
-        includedirs { "../include" }
+        filter {}
 
-        links {"raylib"}
+        includedirs {"../src/Game", core_include, cyclone_include, raylib_dir .. "/src"}
+        links {"SiegeLabCore", "Cyclone"}
+        link_raylib()
+        platform_defines()
 
-        cdialect "C17"
-        cppdialect "C++20"
-
-        includedirs {raylib_dir .. "/src" }
-
-        flags { "ShadowedVariables"}
+    -- Headless GoogleTest executable.
+    project "SiegeLabTests"
+        kind "ConsoleApp"
+        location "../"
+        files {"../tests/**.cpp", "../tests/**.h"}
+        includedirs {"../tests", core_include, cyclone_include, googletest_include, raylib_dir .. "/src"}
+        links {"GoogleTest", "SiegeLabCore", "Cyclone"}
+        link_raylib()
         platform_defines()
 
         filter "action:vs*"
-            defines{"_WINSOCK_DEPRECATED_NO_WARNINGS", "_CRT_SECURE_NO_WARNINGS"}
-            dependson {"raylib"}
-            links {"raylib.lib"}
-            characterset ("Unicode")
-            buildoptions { "/Zc:__cplusplus" }
+            debugdir "$(SolutionDir)"
 
-        filter "system:windows"
-            defines{"_WIN32"}
-            links {"winmm", "gdi32", "opengl32"}
-            libdirs {"../bin/%{cfg.buildcfg}"}
+        filter {}
 
-        filter "system:linux"
-            links {"pthread", "m", "dl", "rt"}
-
-        filter {"system:linux", "options:wayland=off"}
-            links {"X11"}
-
-        filter {"system:linux", "options:wayland=on"}
-            links {"wayland-client", "wayland-cursor", "wayland-egl", "xkbcommon"}
-
-        filter "system:macosx"
-            links {"OpenGL.framework", "Cocoa.framework", "IOKit.framework", "CoreFoundation.framework", "CoreAudio.framework", "CoreVideo.framework", "AudioToolbox.framework", "QuartzCore.framework"}
-
-        filter{}
-        
+group "Dependencies"
 
     project "raylib"
         kind "StaticLib"

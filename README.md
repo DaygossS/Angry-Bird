@@ -1,3 +1,30 @@
+# SiegeLab — build notes
+
+**C++20 · x64 · Cyclone · raylib 6.2 · GoogleTest 1.17.0 · premake5**
+
+## Generate and build (Windows)
+
+1. Run `build-VisualStudio2026.bat` (or `build-VisualStudio2022.bat`). On the first run, premake downloads the pinned versions of raylib and GoogleTest into `build/external/` (not versioned).
+2. Open `Angry-Bird.slnx`, choose **x64** and **Debug** or **Release**, then *Build Solution*.
+3. `SiegeLabGame` is the startup project (raylib window). `SiegeLabTests` runs the GoogleTest suite (headless).
+
+The `.slnx`/`.vcxproj` files are **generated**: don't commit them. To add a project or change an option, edit `build/premake5.lua` and run the `.bat` again.
+
+## Projects
+
+| Project | Type | Contents |
+|---|---|---|
+| `Cyclone` | static lib | `cyclone/` — the teacher's library (headers staged under `include/cyclone/`, include `<cyclone/body.h>`) |
+| `raylib` | static lib | `build/external/raylib-6.2` |
+| `GoogleTest` | static lib | `build/external/googletest-1.17.0` (`gtest` + `gtest_main`) |
+| `SiegeLabCore` | static lib | `src/Core/` — game logic, physics, entities (testable without a window) |
+| `SiegeLabGame` | exe | `src/Game/` — window, input, rendering |
+| `SiegeLabTests` | exe | `tests/` — GoogleTest tests |
+
+Cyclone comes from `Project/Cyclone_Library.zip`; the only change is the `#include "../include/cyclone/…"` path in `src/*.cpp`, identical to the teacher's template.
+
+---
+
 # Raylib-Quickstart
 A simple cross platform template for setting up a project with the bleeding edge raylib code.
 Works with C or C++.
