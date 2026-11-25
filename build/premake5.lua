@@ -166,6 +166,7 @@ build_externals()
 
 cyclone_include = "../cyclone/include"
 core_include = "../src/Core"
+library_include = "../SiegeLab_Library"
 googletest_include = googletest_dir .. "/googletest/include"
 
 workspace "Angry-Bird"
@@ -230,6 +231,22 @@ group ""
         links {"Cyclone"}
         platform_defines()
 
+    -- Game mechanics (GameController, cameras, ...). Every file in SiegeLab_Library/ is picked up automatically.
+    project "SiegeLab_Library"
+        kind "StaticLib"
+        location "../"
+        files {"../SiegeLab_Library/**.h", "../SiegeLab_Library/**.hpp", "../SiegeLab_Library/**.cpp"}
+        vpaths
+        {
+            ["Header Files/*"] = {"../SiegeLab_Library/**.h", "../SiegeLab_Library/**.hpp"},
+            ["Source Files/*"] = {"../SiegeLab_Library/**.cpp"},
+        }
+        pchheader "pch.h"
+        pchsource "../SiegeLab_Library/pch.cpp"
+        includedirs {library_include, core_include, cyclone_include, raylib_dir .. "/src"}
+        links {"SiegeLabCore", "Cyclone"}
+        platform_defines()
+
     -- Window, input and rendering entry point.
     project "SiegeLabGame"
         kind "ConsoleApp"
@@ -263,8 +280,8 @@ group ""
 
         filter {}
 
-        includedirs {"../src/Game", core_include, cyclone_include, raylib_dir .. "/src"}
-        links {"SiegeLabCore", "Cyclone"}
+        includedirs {"../src/Game", library_include, core_include, cyclone_include, raylib_dir .. "/src"}
+        links {"SiegeLab_Library", "SiegeLabCore", "Cyclone"}
         link_raylib()
         platform_defines()
 
@@ -273,8 +290,8 @@ group ""
         kind "ConsoleApp"
         location "../"
         files {"../tests/**.cpp", "../tests/**.h"}
-        includedirs {"../tests", core_include, cyclone_include, googletest_include, raylib_dir .. "/src"}
-        links {"GoogleTest", "SiegeLabCore", "Cyclone"}
+        includedirs {"../tests", library_include, core_include, cyclone_include, googletest_include, raylib_dir .. "/src"}
+        links {"GoogleTest", "SiegeLab_Library", "SiegeLabCore", "Cyclone"}
         link_raylib()
         platform_defines()
 
