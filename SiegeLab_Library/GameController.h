@@ -1,10 +1,10 @@
 #pragma once
 class GameController
 {
-private :
+private:
 	void ProcessInput();
 	void fixedTick(double dt);
 	void restart();
-public : 
+public:
 };
 
