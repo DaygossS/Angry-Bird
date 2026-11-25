@@ -1,4 +1,4 @@
-/*
+/**
  * Implementation file for the rigid body class.
  *
  * Part of the Cyclone physics system.
