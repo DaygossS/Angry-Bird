@@ -151,12 +151,22 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CameraManager.h" />
+    <ClInclude Include="FPSCamera.h" />
+    <ClInclude Include="FreeCamera.h" />
     <ClInclude Include="GameController.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="ICamerraController.h" />
+    <ClInclude Include="OrbitCamera.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CameraManager.cpp" />
+    <ClCompile Include="FPSCamera.cpp" />
+    <ClCompile Include="FreeCamera.cpp" />
     <ClCompile Include="GameController.cpp" />
+    <ClCompile Include="ICamerraController.cpp" />
+    <ClCompile Include="OrbitCamera.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
