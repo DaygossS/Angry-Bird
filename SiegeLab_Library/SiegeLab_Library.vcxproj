@@ -159,6 +159,7 @@
     <ClInclude Include="ICamerraController.h" />
     <ClInclude Include="OrbitCamera.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="StaticCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CameraManager.cpp" />
@@ -174,6 +175,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="SiegeLab_Library.cpp" />
+    <ClCompile Include="StaticCamera.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
