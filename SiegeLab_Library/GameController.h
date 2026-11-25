@@ -7,4 +7,3 @@ private:
 	void restart();
 public:
 };
-
