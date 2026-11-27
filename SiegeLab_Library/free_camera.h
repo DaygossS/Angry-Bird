@@ -1,0 +1,48 @@
+#ifndef SIEGE_LAB_FREE_CAMERA_H_
+#define SIEGE_LAB_FREE_CAMERA_H_
+
+#include "raylib.h"
+
+#include "i_camera_controller.h"
+#include "input_snapshot.h"
+
+namespace siege_lab
+{
+
+// Caméra libre pour se balader sur la carte.
+// Même convention d'angles que le lanceur (énoncé M2) :
+// (yaw, pitch) = (0°, 0°) regarde vers +X ; un yaw positif tourne vers +Z ;
+// un pitch positif regarde vers le haut. Angles en DEGRÉS.
+// ATTENTION : le lanceur utilise déjà A/D, W/S, Q/E au clavier.
+class FreeCamera : public ICameraController
+{
+ public:
+  FreeCamera(Vector3 _position, float _yaw_degrees, float _pitch_degrees,
+             float _move_speed);
+
+  void Update(const InputSnapshot& _input, float _dt) override;
+  Camera3D GetCamera() const override;
+  void Reset() override;
+
+  void SetMouseSensitivity(float _degrees_per_pixel);
+
+  Vector3 GetPosition() const;
+  // Direction du regard, de longueur 1.
+  Vector3 GetForward() const;
+
+ private:
+  Vector3 m_initial_position;
+  Vector3 m_position;
+  float m_initial_yaw;
+  float m_yaw;
+  float m_initial_pitch;
+  float m_pitch;
+  float m_move_speed;                 // mètres par seconde
+  float m_mouse_sensitivity = 0.25f;  // degrés par pixel de souris
+  float m_min_pitch = -89.0f;
+  float m_max_pitch = 89.0f;
+};
+
+}  // namespace siege_lab
+
+#endif  // SIEGE_LAB_FREE_CAMERA_H_
