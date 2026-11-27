@@ -2,6 +2,7 @@
 
 #include "resource_dir.h"
 #include "WorldConvention.h"
+#include "i_camera_controller.h"
 
 int main()
 {
@@ -9,6 +10,7 @@ int main()
     InitWindow(1280, 720, "SiegeLab");
     SearchAndSetResourceDir("resources");
 
+    int cameraMode;
     const cyclone::Vector3 launcher = SiegeLab::GetLauncherPosition();
 
     Camera3D camera = {};
@@ -18,8 +20,22 @@ int main()
     camera.fovy = 45.0f;
     camera.projection = CAMERA_PERSPECTIVE;
 
+
+
     while (!WindowShouldClose())
     {
+        if (IsKeyPressed(KEY_ONE))
+        {
+            cameraMode = CAMERA_FREE;
+            camera.up = { 0.0f, 1.0f, 0.0f }; // Reset roll
+        }
+
+        if (IsKeyPressed(KEY_TWO))
+        {
+            cameraMode = CAMERA_FIRST_PERSON;
+            camera.up = { 0.0f, 1.0f, 0.0f }; // Reset roll
+        }
+        UpdateCamera(&camera, cameraMode);
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
@@ -34,7 +50,7 @@ int main()
         DrawFPS(20, 50);
         EndDrawing();
     }
-
+    
     CloseWindow();
     return 0;
 }

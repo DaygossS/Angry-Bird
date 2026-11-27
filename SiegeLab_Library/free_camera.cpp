@@ -38,7 +38,9 @@ Camera3D FreeCamera::GetCamera() const
 
 void FreeCamera::Reset()
 {
-  // TODO : remettre position, yaw et pitch de départ.
+    Camera3D camera = {};
+    camera.position = { 10.0f, 10.0f, 10.0f };
+    camera.target = { 0.0f, 0.0f, 0.0f };
 }
 
 void FreeCamera::SetMouseSensitivity(float _degrees_per_pixel)

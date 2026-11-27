@@ -15,7 +15,7 @@ FpsCamera::FpsCamera(float _back_distance, float _height)
 
 void FpsCamera::Update(const InputSnapshot& _input, float _dt)
 {
-  // Rien à faire : c'est SetFollowTarget() qui fait bouger cette caméra.
+ 
 }
 
 Camera3D FpsCamera::GetCamera() const
@@ -25,7 +25,8 @@ Camera3D FpsCamera::GetCamera() const
 
 void FpsCamera::Reset()
 {
-  // TODO : revenir à la direction de départ (1, 0, 0).
+   
+   // TODO : revenir à la direction de départ (1, 0, 0).
 }
 
 void FpsCamera::SetFollowTarget(Vector3 _position, Vector3 _velocity)

@@ -9,10 +9,6 @@
 namespace siege_lab
 {
 
-// Caméra qui tourne autour d'une cible fixe (énoncé M1, tests C01 à C05).
-// Convention de l'énoncé : (yaw, pitch) = (0°, 0°) place la caméra sur +Z
-// par rapport à la cible ; un yaw positif tourne vers +X ; un pitch
-// positif monte. Tous les angles sont en DEGRÉS.
 class OrbitCamera : public ICameraController
 {
  public:

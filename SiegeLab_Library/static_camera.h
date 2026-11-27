@@ -9,8 +9,6 @@
 namespace siege_lab
 {
 
-// Vue d'ensemble fixe (isométrique) : la caméra ne bouge jamais.
-// C'est la plus simple : commence par elle pour valider l'interface.
 class StaticCamera : public ICameraController
 {
  public:
@@ -25,6 +23,6 @@ class StaticCamera : public ICameraController
   Vector3 m_target;
 };
 
-}  // namespace siege_lab
+}
 
 #endif  // SIEGE_LAB_STATIC_CAMERA_H_

@@ -13,18 +13,24 @@ StaticCamera::StaticCamera(Vector3 _position, Vector3 _target)
 
 void StaticCamera::Update(const InputSnapshot& _input, float _dt)
 {
-  // Rien à faire : une caméra fixe ignore les entrées.
+
 }
 
 Camera3D StaticCamera::GetCamera() const
 {
-  // TODO : construire la caméra avec MakePerspectiveCamera().
+    Camera3D camera = {};
+    camera.position = { 10.0f, 10.0f, 10.0f };
+    camera.target = { 0.0f, 0.0f, 0.0f };
+    camera.up = { 0.0f, 1.0f, 0.0f };
+    camera.fovy = 45.f;
+    camera.projection = CAMERA_PERSPECTIVE;
+  MakePerspectiveCamera(camera.position, camera.target);
   return Camera3D{};
 }
 
 void StaticCamera::Reset()
 {
-  // Rien à faire : la caméra n'a jamais bougé.
+
 }
 
-}  // namespace siege_lab
+} 

@@ -9,11 +9,7 @@
 namespace siege_lab
 {
 
-// Caméra libre pour se balader sur la carte.
-// Même convention d'angles que le lanceur (énoncé M2) :
-// (yaw, pitch) = (0°, 0°) regarde vers +X ; un yaw positif tourne vers +Z ;
-// un pitch positif regarde vers le haut. Angles en DEGRÉS.
-// ATTENTION : le lanceur utilise déjà A/D, W/S, Q/E au clavier.
+
 class FreeCamera : public ICameraController
 {
  public:
@@ -27,7 +23,6 @@ class FreeCamera : public ICameraController
   void SetMouseSensitivity(float _degrees_per_pixel);
 
   Vector3 GetPosition() const;
-  // Direction du regard, de longueur 1.
   Vector3 GetForward() const;
 
  private:
@@ -37,8 +32,8 @@ class FreeCamera : public ICameraController
   float m_yaw;
   float m_initial_pitch;
   float m_pitch;
-  float m_move_speed;                 // mètres par seconde
-  float m_mouse_sensitivity = 0.25f;  // degrés par pixel de souris
+  float m_move_speed;                 
+  float m_mouse_sensitivity = 0.25f;  
   float m_min_pitch = -89.0f;
   float m_max_pitch = 89.0f;
 };

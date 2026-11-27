@@ -35,7 +35,9 @@ Camera3D OrbitCamera::GetCamera() const
 
 void OrbitCamera::Reset()
 {
-  // TODO : remettre yaw et pitch à 0 et la distance de départ.
+    m_yaw = 0.f;
+    m_pitch = 0.f;
+    SetDistance(m_initial_distance);
 }
 
 void OrbitCamera::SetAngles(float _yaw_degrees, float _pitch_degrees)
@@ -48,6 +50,7 @@ void OrbitCamera::SetAngles(float _yaw_degrees, float _pitch_degrees)
 
 void OrbitCamera::SetDistance(float _distance)
 {
+  
   // TODO (C02) : bloquer la distance entre m_min_distance et m_max_distance.
   m_distance = _distance;
 }

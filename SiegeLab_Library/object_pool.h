@@ -11,11 +11,6 @@
 namespace siege_lab
 {
 
-// Conteneur à capacité fixe, adresses stables et handles à génération.
-// - Un objet vivant ne bouge jamais en mémoire (pas de réallocation).
-// - Détruire un objet incrémente la génération de sa case : Get()
-//   refuse alors les vieux EntityId au lieu de rendre le nouvel objet.
-// - C++20 pur : ni Cyclone, ni raylib.
 template <typename T, int kCapacity>
 class ObjectPool
 {
@@ -23,11 +18,10 @@ class ObjectPool
 
  public:
   ObjectPool() = default;
-  // Copier le pool déplacerait les objets : interdit.
+  
   ObjectPool(const ObjectPool&) = delete;
   ObjectPool& operator=(const ObjectPool&) = delete;
 
-  // Construit un T dans la 1re case libre. Id invalide si plein.
   template <typename... Args>
   EntityId Create(Args&&... _args)
   {
@@ -44,7 +38,7 @@ class ObjectPool
     return EntityId{};
   }
 
-  // nullptr si l'id est invalide, détruit ou périmé.
+ 
   T* Get(EntityId _id)
   {
     Slot* found = FindSlot(_id);
@@ -71,7 +65,6 @@ class ObjectPool
     return true;
   }
 
-  // Détruit tout : tous les anciens id deviennent périmés.
   void Clear()
   {
     for (Slot& current : m_slots)
@@ -85,7 +78,6 @@ class ObjectPool
     m_live_count = 0;
   }
 
-  // Appelle _function(T&) sur chaque objet vivant.
   template <typename Function>
   void ForEach(Function&& _function)
   {
