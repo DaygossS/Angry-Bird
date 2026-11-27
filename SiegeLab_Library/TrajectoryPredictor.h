@@ -3,5 +3,8 @@
 
 class TrajectoryPredictor {
 
+public:
+
+	void PredictTrajectory();
 };
 

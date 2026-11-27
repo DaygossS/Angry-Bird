@@ -1,5 +1,13 @@
 #pragma once
-class Launcher
-{
+class Launcher {
+
+public :
+
+	void shotSettings();
+
+
+
+
+
 };
 

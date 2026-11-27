@@ -4,5 +4,14 @@
 
 class ShotSettings {
 
+	public :
+
+
+		int origin;
+		int proetctileKind;
+		
+		void getDirection();
+		void getSpeed();
+
 };
 

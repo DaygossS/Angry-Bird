@@ -1,17 +1,19 @@
 #pragma once
-#include "GameController.h"
-//#include "../src/rcore."
+#include "raylib.h"
 
 class InputController {
 
-public :
+public:
 
-	InputController inputController;
+	void Selecting(const Camera3D& camera, Vector3 spherePosition, float sphereRadius);
+	bool IsSelected() const;
+	Ray GetRay() const;
 
-	Ray ray = {0};
+private:
+
+	Ray ray = { 0 };
 	RayCollision collision = { 0 };
 
-	void Jeclick();
+
 
 };
-
